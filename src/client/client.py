@@ -1,8 +1,14 @@
+# Standart library imports
 import socket
 import threading
+
+# Textual imports
 from textual.app import App, ComposeResult
 from textual.containers import Vertical, Horizontal
 from textual.widgets import Header, Footer, TextArea, Input, Button, Static
+
+# Custom widgets
+from screens.error_screen import ErrorScreen
 
 
 class CheatChatClient(App):
@@ -101,9 +107,8 @@ class CheatChatClient(App):
             self.show_error("❌ The port must be a number.")
 
     def show_error(self, message: str):
-        """Show an error message in the login screen"""
-        error_label = self.query_one("#error_label", Static)
-        error_label.update(message)
+        """Show an error message in a modal dialog"""
+        self.push_screen(ErrorScreen(message))
 
     def send_message(self):
         """Invia un messaggio al server"""
